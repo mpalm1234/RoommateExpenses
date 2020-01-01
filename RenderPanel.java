@@ -11,11 +11,11 @@ public class RenderPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-//		Expenses e = Expenses.bla;
+//		Calculator calc = Calculator.calc;
 
 		//Background
 		g.setColor(Color.DARK_GRAY);
-//		g.fillRect(0, 0, Expenses.FRAMESIZE, Expenses.FRAMESIZE);
+		g.fillRect(0, 0, Calculator.FRAMESIZE, Calculator.FRAMESIZE);
 
 	}
 }

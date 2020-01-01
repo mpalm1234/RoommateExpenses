@@ -3,7 +3,6 @@ package roommateExpenses;
 public class Roommate {
 	
 	String name;
-	Expense exp;
 	Expense[] exps;
 	
 	// Constructor:
