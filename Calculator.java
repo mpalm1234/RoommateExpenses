@@ -1,74 +1,55 @@
 package roommateExpenses;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class Calculator implements ActionListener, KeyListener{
+public class Calculator implements ActionListener{
 
 	public JFrame frame = new JFrame("Roommate Expenses Calculator");
 	public RenderPanel renderPanel = new RenderPanel();
-	
+
 	public Calculator() {
-		frame.add(renderPanel);
 		frame.setSize(renderPanel.FRAMEX, renderPanel.FRAMEY);
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.addKeyListener(this);
+		
+		renderPanel.getSubmit().addActionListener(this);
+		frame.add(renderPanel);
+		
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		renderPanel.repaint();
-		
-	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		String name;
 		double amount;
-		Expense[] exps;
+		String name1, name2;
+		Expense[] exps1 = new Expense[renderPanel.MAXEXPS];
+		Expense[] exps2 = new Expense[renderPanel.MAXEXPS];
 
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-			// Create Roommate #1
-			exps = null;
-			name = renderPanel.rmname1.getText();
-			for (int i = 0; i < renderPanel.MAXEXPS; i++) {
-				amount = (double) renderPanel.rm1exs[i].getValue();
-				exps[i] = new Expense(" ", amount);	
-			}
-			Roommate friend1 = new Roommate(name, exps);
-
-			// Create Roommate #2
-			exps = null;
-			name = renderPanel.rmname2.getText();
-			for (int i = 0; i < renderPanel.MAXEXPS; i++) {
-				amount = (double) renderPanel.rm2exs[i].getValue();
-				exps[i] = new Expense(" ", amount);	
-			}
-			Roommate friend2 = new Roommate(name, exps);
-
-			// Calculate Difference
-			renderPanel.owedStatement = getPay(friend1, friend2); 
-
+		
+		// Create Roommate #1
+		name1 = renderPanel.getRmname1();
+		for (int i = 0; i < renderPanel.MAXEXPS; i++) {
+			amount = renderPanel.getRm1exp(i);
+			exps1[i] = new Expense(" ", amount);	
 		}
+		Roommate friend1 = new Roommate(name1, exps1);
+
+		// Create Roommate #2
+		name2 = renderPanel.getRmname2();			
+		for (int i = 0; i < renderPanel.MAXEXPS; i++) {
+			amount = renderPanel.getRm2exp(i);
+			exps2[i] = new Expense(" ", amount);	
+		}
+		Roommate friend2 = new Roommate(name2, exps2);
+
+		// Calculate Difference
+		renderPanel.setOwedStatement(getPay(friend1, friend2)); 
+		System.out.println(renderPanel.owedStatement);
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public String getPay(Roommate pal1, Roommate pal2) {
 		double diff, tot1 = 0, tot2 = 0;
@@ -94,6 +75,8 @@ public class Calculator implements ActionListener, KeyListener{
 	public static void main(String[] args) {
 		new Calculator();
 	}
+
+
 
 
 }

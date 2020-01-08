@@ -1,17 +1,17 @@
 package roommateExpenses;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import java.text.NumberFormat;
 
 @SuppressWarnings("serial")
 public class RenderPanel extends JPanel {
@@ -23,14 +23,16 @@ public class RenderPanel extends JPanel {
 
 	public JTextField rmname1 = new JTextField(" ",15);
 	public JTextField rmname2 = new JTextField(" ",15);
-	public JFormattedTextField[] rm1exs = new JFormattedTextField[6];
-	public JFormattedTextField[] rm2exs = new JFormattedTextField[6];
+	public JFormattedTextField[] rm1exs = new JFormattedTextField[MAXEXPS];
+	public JFormattedTextField[] rm2exs = new JFormattedTextField[MAXEXPS];
+	
+	public JButton submitBtn = new JButton("SUBMIT");
 	public JTextField rtnFld  = new JTextField(" ",15);
 	public String owedStatement = " ";
 
 	public RenderPanel() {
 		super(new BorderLayout());
-
+		
 		// Labels 
 		JLabel title1 = new JLabel("Roommate #1");
 		JLabel title2 = new JLabel("Roommate #2");
@@ -82,7 +84,8 @@ public class RenderPanel extends JPanel {
 			rm2Pane.add(rm2exs[i]);
 		}
 
-		JPanel rtnPane = new JPanel(new GridLayout(1, 0));
+		JPanel rtnPane = new JPanel(new GridLayout(2, 0));
+		rtnPane.add(submitBtn);
 		rtnPane.add(rtnFld);
 
 		this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -92,28 +95,36 @@ public class RenderPanel extends JPanel {
 		this.add(rtnPane, BorderLayout.SOUTH);
 	}
 
-	public JTextField getRmname1() {
-		return rmname1;
+	public String getRmname1() {
+		return rmname1.getText();
 	}
 
 	public void setRmname1(JTextField rmname1) {
 		this.rmname1 = rmname1;
 	}
 
-	public JTextField getRmname2() {
-		return rmname2;
+	public String getRmname2() {
+		return rmname2.getText();
 	}
 
 	public void setRmname2(JTextField rmname2) {
 		this.rmname2 = rmname2;
 	}
 
+	public double getRm1exp(int i) {
+		return ((Number)rm1exs[i].getValue()).doubleValue();
+	}
+	
 	public JFormattedTextField[] getRm1exs() {
 		return rm1exs;
 	}
 
 	public void setRm1exs(JFormattedTextField[] rm1exs) {
 		this.rm1exs = rm1exs;
+	}
+	
+	public double getRm2exp(int i) {
+		return ((Number)rm2exs[i].getValue()).doubleValue();
 	}
 
 	public JFormattedTextField[] getRm2exs() {
@@ -123,26 +134,14 @@ public class RenderPanel extends JPanel {
 	public void setRm2exs(JFormattedTextField[] rm2exs) {
 		this.rm2exs = rm2exs;
 	}
-
-	public JTextField getRtnFld() {
-		return rtnFld;
+	
+	public JButton getSubmit() {
+		return submitBtn;
 	}
-
-	public void setRtnFld(JTextField rtnFld) {
-		this.rtnFld = rtnFld;
+	
+	public void setOwedStatement(String statement) {
+		this.owedStatement = statement;
 	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
-		//Background
-//		g.setColor(Color.DARK_GRAY);
-//		g.fillRect(0, 0, FRAMEX, FRAMEY);
-
-	}
-
-
 
 
 }
